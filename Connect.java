@@ -16,7 +16,6 @@ public class Connect {
             System.out.println("Erreur de connection");
             e.printStackTrace();
         }
-        
     }
     public Connection maConnection(){
         return cn;
