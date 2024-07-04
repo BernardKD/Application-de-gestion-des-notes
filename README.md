@@ -1,1 +1,1 @@
-This is a project for an appliction of marks managment in a university
+This is a project for an application of marks management in a university
