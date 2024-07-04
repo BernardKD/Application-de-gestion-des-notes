@@ -1,13 +1,13 @@
-package Etudiant;
+package SuperProf;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import static java.awt.image.ImageObserver.HEIGHT;
-import static java.awt.image.ImageObserver.WIDTH;
 import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -20,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -27,18 +28,22 @@ import javax.swing.JButton;
 
 public class EtudConnect extends JFrame {
     
-    
     JLabel lblTitre;
     JTable table1, table;
-    JButton btnSem1, btnSem2, btnPrec;
+    JButton btnSem1, btnSem2, btnPrec, btnSem;
     JScrollPane scroll, scroll1;
     Statement pst;
     ResultSet rs;
     
-    public EtudConnect(String etud, String ue, String ue2, String uet, String mat){
+    public EtudConnect(String etud, String ue, String ue2, String uet, String mat, String datab,String userx, String passx){
         
         super.setTitle("SuperProf");
-        super.setSize(1000, 600);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+        int desiredWidth = (int) (screenWidth*0.8);
+        int desiredHeight = (int) (screenHeight*0.8);
+        super.setSize(desiredWidth, desiredHeight);
         super.setLocationRelativeTo(null);
         super.setResizable(true);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,13 +59,32 @@ public class EtudConnect extends JFrame {
         //lblTitre.setLocation(400, 225);
         pn.add(lblTitre);
         
-        int Mgp=0, Cr=0, Pa=0;
+        lblTitre = new JLabel("Welcome "+etud);
+        lblTitre.setBounds(400,35, 450, 20);
+        lblTitre.setFont(new Font("Arial", Font.ITALIC, 15));
+        lblTitre.setForeground(new Color(255,255,255));
+        //lblTitre.setLocation(400, 225);
+        pn.add(lblTitre);
         
-        JLabel lblMgp = new JLabel("MGP = "+Mgp);
-        lblMgp.setBounds(800,320, 160,30);
+        int Mgp=0, Mgp2=0, Mgp3=0, Cr=0, Pa=0;
+        
+        JLabel lblMgp = new JLabel("MGP1 = "+Mgp);
+        lblMgp.setBounds(800,320, 180,30);
         lblMgp.setFont(new Font("Arial", Font.BOLD, 24));
         lblMgp.setForeground(new Color(255,255,255));
         pn.add(lblMgp);
+        
+        JLabel lblMgp2 = new JLabel("MGP2 = "+Mgp2);
+        lblMgp2.setBounds(800,360, 180,30);
+        lblMgp2.setFont(new Font("Arial", Font.BOLD, 24));
+        lblMgp2.setForeground(new Color(255,255,255));
+        pn.add(lblMgp2);
+        
+        JLabel lblMgp3 = new JLabel("MGP3 = "+Mgp3);
+        lblMgp3.setBounds(800,400, 180,30);
+        lblMgp3.setFont(new Font("Arial", Font.BOLD, 24));
+        lblMgp3.setForeground(new Color(255,255,255));
+        pn.add(lblMgp3);
         
         //ImageIcon i  = new ImageIcon(new ImageIcon("pubg.jpg").getImage().getScaledInstance(250,250, Image.SCALE_DEFAULT));
         JLabel lblLogo = new JLabel();
@@ -70,7 +94,7 @@ public class EtudConnect extends JFrame {
         pn.add(lblLogo);
         
         btnPrec = new JButton("SE DECONNECTER");
-        btnPrec.setBounds(520,150,260,30);
+        btnPrec.setBounds(520,190,260,30);
         btnPrec.setFont(new Font("Arial", Font.BOLD,14));
         btnPrec.setBackground(new Color(100,200,200));
         btnPrec.addActionListener(new java.awt.event.ActionListener(){
@@ -80,7 +104,7 @@ public class EtudConnect extends JFrame {
             
             private void btnPrecActionPerformed(ActionEvent evt) {
                 
-                Etudiant ecr = new Etudiant();
+                Etudiant ecr = new Etudiant(datab,userx,passx);
                 ecr.setVisible(true);
                 dispose();
                 
@@ -100,7 +124,7 @@ public class EtudConnect extends JFrame {
             }
             
             private void btnSem1ActionPerformed(ActionEvent evt) {
-                Connect con = new Connect();
+                Connect con = new Connect(datab,userx,passx);
                 DefaultTableModel model = new DefaultTableModel();
                 init();
                 pn.add(scroll1);
@@ -134,12 +158,19 @@ public class EtudConnect extends JFrame {
                         }
                     }
                     Mgp = (Float) Pa/Cr;
-                    lblMgp.setText("MGP ="+Mgp);
+                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                    String Mgpx = decimalFormat.format(Mgp);
+                    lblMgp.setText("MGP1 ="+Mgpx);
+                    String rq = "update tb_etudiant set mgp=? where (matricule = ?)";
+                    PreparedStatement ps = con.maConnection().prepareStatement(rq);
+                    ps.setFloat(1,Mgp);
+                    ps.setString(2, mat);
+                    ps.executeUpdate();
                     con.maConnection().close();
-                    System.out.println(Mgp);
+                    System.out.println(Mgpx);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Calcul de la MGP impossible car les notes ne sont pas completes", null, JOptionPane.ERROR_MESSAGE);
-                    lblMgp.setText("MGP = 0");
+                    lblMgp.setText("MGP1 = 0");
                 }    
                 
                 
@@ -161,7 +192,7 @@ public class EtudConnect extends JFrame {
             }
             
             private void btnSem2ActionPerformed(ActionEvent evt) {
-                Connect con = new Connect();
+                Connect con = new Connect(datab,userx,passx);
                 DefaultTableModel model = new DefaultTableModel();
                 init();
                 pn.add(scroll1);
@@ -172,7 +203,7 @@ public class EtudConnect extends JFrame {
                 model.addColumn("Points accumules");
                 
                 int Cr=0;
-                float Mgp=0, Pa=0;
+                float Mgp2=0, Pa=0;
         
                 table1.setModel(model);
                 String sql = "select * from notes_etudiant2 order by matricule desc";
@@ -196,13 +227,20 @@ public class EtudConnect extends JFrame {
                         }
                        
                     }
-                    Mgp = (Float) Pa/Cr;
-                    lblMgp.setText("MGP ="+Mgp);
-                    System.out.println(Mgp);
+                    Mgp2 = (Float) Pa/Cr;
+                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                    String Mgpx = decimalFormat.format(Mgp2);
+                    lblMgp2.setText("MGP2 ="+Mgpx);
+                    String rq = "update tb_etudiant set mgp2=? where (matricule = ?)";
+                    PreparedStatement ps = con.maConnection().prepareStatement(rq);
+                    ps.setFloat(1,Mgp2);
+                    ps.setString(2, mat);
+                    ps.executeUpdate();
                     con.maConnection().close();
+                    System.out.println(Mgpx);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Calcul de la MGP impossible car les notes ne sont pas completes", null, JOptionPane.ERROR_MESSAGE);
-                    lblMgp.setText("MGP = 0");
+                    lblMgp2.setText("MGP2 = 0");
                 }    
                 
                 
@@ -212,9 +250,61 @@ public class EtudConnect extends JFrame {
         });
         pn.add(btnSem2);
         
-           
+        btnSem = new JButton("ANNUEL");
+        btnSem.setBounds(520,150,260,30);
+        btnSem.setFont(new Font("Arial", Font.BOLD, 15));
+        btnSem.setForeground(Color.BLACK);
+        btnSem.setBackground(new Color(0,255,255));
+        btnSem.addActionListener(new ActionListener(){
+            
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSemActionPerformed(evt);
+            }
+            
+            private void btnSemActionPerformed(ActionEvent evt) {
+                Connect con = new Connect(datab,userx,passx);
+                float Mgp=0, Mgp2=0, Mgp3=0;
+                
+                String sql3 = "select * from tb_etudiant order by matricule desc";
+                try{
+                    pst = con.maConnection().createStatement();
+                    rs = pst.executeQuery(sql3);
+                    while(rs.next()){
+                        String Mat1 = rs.getString("matricule");
+                        String Mat = mat;
+                        if(Mat.equals(Mat1)){
+                            rs.getString("mgp");
+                            rs.getString("mgp2");
+                            Mgp = (Float) Float.parseFloat(rs.getString("mgp"));
+                            Mgp2 = (Float) Float.parseFloat(rs.getString("mgp2"));
+                            
+                        }
+                    }
+                    Mgp3 = (Float) (Mgp2 + Mgp)/2 ;
+                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                    String Mgpx = decimalFormat.format(Mgp3);
+                    lblMgp3.setText("MGP ="+Mgpx);
+                    String rq = "update tb_etudiant set mgp3=? where (matricule = ?)";
+                    PreparedStatement ps = con.maConnection().prepareStatement(rq);
+                    ps.setFloat(1,Mgp3);
+                    ps.setString(2, mat);
+                    ps.executeUpdate();
+                    con.maConnection().close();
+                    System.out.println(Mgpx);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Calcul de la MGP annuelle impossible car les MGP ne sont pas completes", null, JOptionPane.ERROR_MESSAGE);
+                    lblMgp3.setText("MGP3 = 0");
+                }    
+                
+                
+                
+            }
+
+        });
+        pn.add(btnSem);
+        
         try {
-            Connect con = new Connect();
+            Connect con = new Connect(datab,userx,passx);
             String rq = "Select * from tb_etudiant where identifiant=?";
             PreparedStatement ps = con.maConnection().prepareStatement(rq);
             ps.setString(1, etud);
@@ -251,13 +341,6 @@ public class EtudConnect extends JFrame {
         
     }
     
-    public static void main(String[] args){
-        
-        EtudConnect en = new EtudConnect("1","INF151","INF152","ANG111","1");
-        en.setVisible(true);
-        
-    }
-
     public void init() {
         table1 = new JTable();
         scroll1 = new JScrollPane();
