@@ -1,8 +1,10 @@
-package Etudiant;
+package SuperProf;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -39,10 +41,15 @@ public class EnregistrementProf extends JFrame {
     Statement pst;
     ResultSet rs;
     
-    public EnregistrementProf(String prof){
+    public EnregistrementProf(String prof,String datab,String userx, String passx){
         
         super.setTitle("SuperProf");
-        super.setSize(1000, 600);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+        int desiredWidth = (int) (screenWidth*0.8);
+        int desiredHeight = (int) (screenHeight*0.8);
+        super.setSize(desiredWidth, desiredHeight);
         super.setLocationRelativeTo(null);
         super.setResizable(true);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,6 +67,13 @@ public class EnregistrementProf extends JFrame {
         //lblTitre.setLocation(400, 225);
         pn.add(lblTitre);
         
+        lblTitre = new JLabel("MAKING A PROFESSOR ACCOUNT");
+        lblTitre.setBounds(445,35, 400, 20);
+        lblTitre.setFont(new Font("Arial", Font.ITALIC, 15));
+        lblTitre.setForeground(new Color(255,255,255));
+        //lblTitre.setLocation(400, 225);
+        pn.add(lblTitre);
+        
         btnPrec = new JButton("<-     RETOUR");
         btnPrec.setBounds(200,420,150,30);
         btnPrec.setFont(new Font("Arial", Font.BOLD,14));
@@ -72,7 +86,7 @@ public class EnregistrementProf extends JFrame {
             
             private void btnPrecActionPerformed(ActionEvent evt) {
                 
-                Prof ecr = new Prof();
+                Prof ecr = new Prof(datab,userx,passx);
                 ecr.setVisible(true);
                 dispose();
                 
@@ -171,24 +185,93 @@ public class EnregistrementProf extends JFrame {
         comboUe = new JComboBox();
         comboUe.setBounds(200,340,100,30);
         comboUe.setFont(new Font("Arial", Font.PLAIN, 14));
-        comboUe.addItem("");
-        comboUe.addItem("INF111");
-        comboUe.addItem("INF121");
-        comboUe.addItem("INF131");
-        comboUe.addItem("INF141");
+        comboUe.addItem(" ");
         comboUe.addItem("INF151");
+        comboUe.addItem("INF141");
         comboUe.addItem("PHY161");
-        comboUe.addItem("MAT131");
-        comboUe.addItem("ANG111");
-        comboUe.addItem("FRA111");
-        comboUe.addItem("INF112");
-        comboUe.addItem("INF122");
-        comboUe.addItem("INF132");
-        comboUe.addItem("INF142");
+        comboUe.addItem("INF251");
+        comboUe.addItem("INF241");
+        comboUe.addItem("INF261");
+        comboUe.addItem("INF351");
+        comboUe.addItem("INF341");
+        comboUe.addItem("INF361");
+        comboUe.addItem("BIO131");
+        comboUe.addItem("PHY111");
+        comboUe.addItem("PHY121");
+        comboUe.addItem("BIO251");
+        comboUe.addItem("PHY211");
+        comboUe.addItem("PHY221");
+        comboUe.addItem("INF111");
+        comboUe.addItem("INF161");
+        comboUe.addItem("INF221");
+        comboUe.addItem("INF281");
+        comboUe.addItem("BIO141");
+        comboUe.addItem("PHY181");
+        comboUe.addItem("BIO281");
+        comboUe.addItem("PHY291");
+        comboUe.addItem("PHY131");
+        comboUe.addItem("MAT151");
+        comboUe.addItem("INF111");
+        comboUe.addItem("BIO261");
+        comboUe.addItem("CHI261");
+        comboUe.addItem("PHY131");
+        comboUe.addItem("MAT151");
+        comboUe.addItem("INF111");
+        comboUe.addItem("BIO261");
+        comboUe.addItem("INF261");
+        comboUe.addItem("BCH351");
+        comboUe.addItem("BCH361");
+        comboUe.addItem("BCH371");
+        comboUe.addItem("BCH381");
         comboUe.addItem("INF152");
+        comboUe.addItem("INF142");
         comboUe.addItem("PHY162");
-        comboUe.addItem("MAT112");
-        comboUe.addItem("PPE112");
+        comboUe.addItem("INF252");
+        comboUe.addItem("INF242");
+        comboUe.addItem("INF262");
+        comboUe.addItem("INF352");
+        comboUe.addItem("INF342");
+        comboUe.addItem("INF362");
+        comboUe.addItem("BIO132");
+        comboUe.addItem("PHY112");
+        comboUe.addItem("PHY122");
+        comboUe.addItem("BIO252");
+        comboUe.addItem("PHY212");
+        comboUe.addItem("PHY222");
+        comboUe.addItem("INF112");
+        comboUe.addItem("INF162");
+        comboUe.addItem("INF222");
+        comboUe.addItem("INF282");
+        comboUe.addItem("BIO142");
+        comboUe.addItem("PHY182");
+        comboUe.addItem("BIO282");
+        comboUe.addItem("PHY292");
+        comboUe.addItem("PHY132");
+        comboUe.addItem("MAT152");
+        comboUe.addItem("INF112");
+        comboUe.addItem("BIO262");
+        comboUe.addItem("CHI262");
+        comboUe.addItem("PHY132");
+        comboUe.addItem("MAT152");
+        comboUe.addItem("INF112");
+        comboUe.addItem("BIO262");
+        comboUe.addItem("INF262");
+        comboUe.addItem("BCH352");
+        comboUe.addItem("BCH362");
+        comboUe.addItem("BCH372");
+        comboUe.addItem("BCH382");
+        comboUe.addItem("FRA111");
+        comboUe.addItem("ANG111");
+        comboUe.addItem("FRA211");
+        comboUe.addItem("ANG211");
+        comboUe.addItem("FRA311");
+        comboUe.addItem("ANG311");
+        comboUe.addItem("FRA104");
+        comboUe.addItem("ANG104");
+        comboUe.addItem("FRA204");
+        comboUe.addItem("ANG204");
+        comboUe.addItem("FRA304");
+        comboUe.addItem("ANG304");
         pn.add(comboUe);
         
         btnenregistrer = new JButton("ENREGISTRER");
@@ -205,7 +288,7 @@ public class EnregistrementProf extends JFrame {
                 } else {
                     String Id, Mdp, Nom, Sexe, Fil, Niv, Ue;
                     try {
-                        Connect con = new Connect();
+                        Connect con = new Connect(datab,userx,passx);
                         Id = txtIdentifiant.getText();
                         String rq = "delete from tb_prof where identifiant ='" + Id + "'";
                         pst = con.maConnection().createStatement();
@@ -226,7 +309,7 @@ public class EnregistrementProf extends JFrame {
                         Ue = comboUe.getSelectedItem().toString();
                     
                         try {
-                            Connect con = new Connect();
+                            Connect con = new Connect(datab,userx,passx);
                             String rqq = "insert into tb_prof(identifiant,mdp,nom,sexe,filiere,niveau,ue,photo) values(?,?,?,?,?,?,?,?)";
                             PreparedStatement ps = con.maConnection().prepareStatement(rqq);
                             ps.setString(1, Id);
@@ -244,7 +327,7 @@ public class EnregistrementProf extends JFrame {
                             JOptionPane.showMessageDialog(null,"Ereur!"+ex.getMessage(),null,JOptionPane.ERROR_MESSAGE);
                         }   
                         dispose();
-                        EnregistrementProf etd = new EnregistrementProf(prof);
+                        EnregistrementProf etd = new EnregistrementProf(prof,datab,userx,passx);
                         etd.setVisible(true);
                     }
                 }
@@ -269,7 +352,7 @@ public class EnregistrementProf extends JFrame {
                     JOptionPane.showMessageDialog(null, "Veuillez entrez un identifiant", null, JOptionPane.ERROR_MESSAGE);
                 } else {
                     try{
-                        Connect con = new Connect();
+                        Connect con = new Connect(datab,userx,passx);
                         String rq = "Select * from tb_prof where identifiant =?";
                         PreparedStatement ps = con.maConnection().prepareStatement(rq);
                         ps.setString(1,txtIdentifiant.getText());
@@ -317,7 +400,7 @@ public class EnregistrementProf extends JFrame {
                     JOptionPane.showMessageDialog(null, "Veuillez entrez un identifiant", null, JOptionPane.ERROR_MESSAGE);
                 } else {
                     String Id, Mdp, Nom, Sexe, Fil, Niv, Ue;
-                    Connect con = new Connect();
+                    Connect con = new Connect(datab,userx,passx);
                     Id = txtIdentifiant.getText();
                     String rq = "delete from tb_prof where identifiant ='" + Id + "'";
                     try {
@@ -330,7 +413,7 @@ public class EnregistrementProf extends JFrame {
                     }
                     
                     dispose();
-                    EnregistrementProf etd = new EnregistrementProf(prof);
+                    EnregistrementProf etd = new EnregistrementProf(prof,datab,userx,passx);
                     etd.setVisible(true);
                 }
                 
@@ -380,13 +463,6 @@ public class EnregistrementProf extends JFrame {
         });
         
         pn.add(lblImage);
-        
-    }
-    
-    public static void main(String[] args){
-        
-        EnregistrementProf en = new EnregistrementProf("");
-        en.setVisible(true);
         
     }
     
