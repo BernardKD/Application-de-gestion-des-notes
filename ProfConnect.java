@@ -1,9 +1,10 @@
-package Etudiant;
+package SuperProf;
 
-import ConnecProf.ConnecProf;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -25,7 +26,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class ProfConnect extends JFrame {
     
-    Connect con = new Connect();
     JLabel lblTitre, lblCc, lblTp, lblSn, lblMat, lblInf1, lblInf2, lblInf3, lblLogo;
     JButton btnEnregistrer, btnPrec, btnSup, btnAjouEtud, btnMod;
     JTextField txtMat, txtCc, txtTp, txtSn;
@@ -36,10 +36,15 @@ public class ProfConnect extends JFrame {
     ResultSet rs, rs1;
     Statement pst;
     
-    public ProfConnect(String prof, String ue){
+    public ProfConnect(String prof, String ue, String datab, String userx, String passx){
         
         super.setTitle("SuperProf");
-        super.setSize(1100, 600);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+        int desiredWidth = (int) (screenWidth*0.8);
+        int desiredHeight = (int) (screenHeight*0.8);
+        super.setSize(desiredWidth, desiredHeight);
         super.setLocationRelativeTo(null);
         super.setResizable(true);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,9 +53,18 @@ public class ProfConnect extends JFrame {
         pn.setLayout(null);
         add(pn);
         pn.setBackground(new Color(100,50,100));
+        Connect con = new Connect(datab,userx,passx);
+    
         lblTitre = new JLabel("Bienvenue "+prof);
         lblTitre.setBounds(350,10, 450, 30);
         lblTitre.setFont(new Font("Arial", Font.BOLD, 24));
+        lblTitre.setForeground(new Color(255,255,255));
+        //lblTitre.setLocation(400, 225);
+        pn.add(lblTitre);
+        
+        lblTitre = new JLabel("Welcome "+prof);
+        lblTitre.setBounds(400,35, 450, 20);
+        lblTitre.setFont(new Font("Arial", Font.ITALIC, 15));
         lblTitre.setForeground(new Color(255,255,255));
         //lblTitre.setLocation(400, 225);
         pn.add(lblTitre);
@@ -63,9 +77,9 @@ public class ProfConnect extends JFrame {
         pn.add(lblLogo);
         
         try {
-            Connect con = new Connect();
+            Connect conn = new Connect(datab,userx,passx);
             String rq = "Select * from tb_prof where identifiant=?";
-            PreparedStatement ps = con.maConnection().prepareStatement(rq);
+            PreparedStatement ps = conn.maConnection().prepareStatement(rq);
             ps.setString(1,prof);
             rs = ps .executeQuery();
             if(rs.next()==false){
@@ -81,9 +95,9 @@ public class ProfConnect extends JFrame {
                     JOptionPane.showMessageDialog(null,"Erreur!"+e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
                 }
             }
-            con.maConnection().close();
+            conn.maConnection().close();
         } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null,"Erreuruuu!"+ex.getMessage(), null, JOptionPane.ERROR_MESSAGE);
+           JOptionPane.showMessageDialog(null,"Erreur!"+ex.getMessage(), null, JOptionPane.ERROR_MESSAGE);
         }
         
         lblInf1 = new JLabel("Veuillez entrer 0 si l'UE ne comporte pas de TP");
@@ -165,9 +179,9 @@ public class ProfConnect extends JFrame {
                 String Ue0;
                 String Mat0;
                 float Q=0;
-                while((txtMat==null)||(txtCc==null)||(txtTp==null)||(txtSn==null)){
+                if((txtMat.getText().equals(""))||(txtCc.getText().equals(""))||(txtTp.getText().equals(""))||(txtSn.getText().equals(""))){
                     JOptionPane.showMessageDialog(null,"Veuillez entrer toutes les informations requises",null, JOptionPane.ERROR_MESSAGE);
-                } 
+                } else {
                 Mat = txtMat.getText();
                 float Cc = (Float) Float.parseFloat(txtCc.getText());
                 float Tp = (Float) Float.parseFloat(txtTp.getText());
@@ -201,7 +215,7 @@ public class ProfConnect extends JFrame {
                 } else if((T>=80)&&(T<=100)) {
                     Q=4;
                 }
-                Connect con = new Connect();
+                Connect con = new Connect(datab,userx,passx);
                 
                 try{
                     String rq0 = "Select * from notes_etudiant where ue =?";
@@ -233,7 +247,7 @@ public class ProfConnect extends JFrame {
                                     ps.executeUpdate();
                                     JOptionPane.showMessageDialog(null,"Notes enregistrers!",null,JOptionPane.INFORMATION_MESSAGE);
                                     con.maConnection().close();
-                                    ProfConnect en = new ProfConnect(prof,ue);
+                                    ProfConnect en = new ProfConnect(prof,ue,datab,userx,passx);
                                     en.setVisible(true);
                                     dispose();
                                 } else if ((Cc>=0&&Cc<=30)&&(Tp==0)&&(Sn>=0&&Sn<=70)){
@@ -248,7 +262,7 @@ public class ProfConnect extends JFrame {
                                     ps.executeUpdate();
                                     JOptionPane.showMessageDialog(null,"Notes enregistrer!",null,JOptionPane.INFORMATION_MESSAGE);
                                     con.maConnection().close();
-                                    ProfConnect en = new ProfConnect(prof,ue);
+                                    ProfConnect en = new ProfConnect(prof,ue,datab,userx,passx);
                                     en.setVisible(true);
                                     dispose();
                                 } else {
@@ -276,7 +290,7 @@ public class ProfConnect extends JFrame {
                                             ps.executeUpdate();
                                             JOptionPane.showMessageDialog(null,"Notes enregistrers!",null,JOptionPane.INFORMATION_MESSAGE);
                                             con.maConnection().close();
-                                            ProfConnect en = new ProfConnect(prof,ue);
+                                            ProfConnect en = new ProfConnect(prof,ue,datab,userx,passx);
                                             en.setVisible(true);
                                             dispose();
                                         } else if ((Cc>=0&&Cc<=30)&&(Tp==0)&&(Sn>=0&&Sn<=70)){
@@ -291,7 +305,7 @@ public class ProfConnect extends JFrame {
                                             ps.executeUpdate();
                                             JOptionPane.showMessageDialog(null,"Notes enregistrer!",null,JOptionPane.INFORMATION_MESSAGE);
                                             con.maConnection().close();
-                                            ProfConnect en = new ProfConnect(prof,ue);
+                                            ProfConnect en = new ProfConnect(prof,ue,datab,userx,passx);
                                             en.setVisible(true);
                                             dispose();
                                         } else {
@@ -309,6 +323,7 @@ public class ProfConnect extends JFrame {
                     
                 } catch (SQLException e){
                     e.printStackTrace();
+                }
                 }
                 
             }
@@ -328,7 +343,7 @@ public class ProfConnect extends JFrame {
             
             private void btnAjouEtudActionPerformed(ActionEvent evt) {
                 
-                EnregistrementEtudiant ecr = new EnregistrementEtudiant();
+                EnregistrementEtudiant ecr = new EnregistrementEtudiant(datab,userx,passx);
                 ecr.setVisible(true);
                 dispose();
                 
@@ -348,7 +363,7 @@ public class ProfConnect extends JFrame {
             }
             
             private void btnModActionPerformed(ActionEvent evt) {
-                Mdpmdrt es = new Mdpmdrt("CrtPr",1,prof,ue);
+                Mdpmdrt es = new Mdpmdrt("CrtPr",1,prof,ue,datab,userx,passx);
                 es.setVisible(true);
                 dispose();
             } 
@@ -365,7 +380,7 @@ public class ProfConnect extends JFrame {
             public void actionPerformed(ActionEvent ev){
                 
                 String Id, Mdp, Nom, Sexe, Fil, Niv, Ue;
-                Connect con = new Connect();
+                Connect con = new Connect(datab,userx,passx);
                 
                 String rq = "delete from tb_prof where identifiant ='" + prof + "'";
                 try {
@@ -378,7 +393,7 @@ public class ProfConnect extends JFrame {
                 }
                     
                 dispose();
-                Prof etd = new Prof();
+                Prof etd = new Prof(datab,userx,passx);
                 etd.setVisible(true);
                 
             }
@@ -398,7 +413,7 @@ public class ProfConnect extends JFrame {
             
             private void btnPrecActionPerformed(ActionEvent evt) {
                 
-                Prof ecr = new Prof();
+                Prof ecr = new Prof(datab,userx,passx);
                 ecr.setVisible(true);
                 dispose();
                 
@@ -447,19 +462,29 @@ public class ProfConnect extends JFrame {
             private void table1MouseReleased(MouseEvent evt) {
                 int selectionner = table1.getSelectedRow();
                 DefaultTableModel model = (DefaultTableModel) table1.getModel();
-                txtMat.setText(model.getValueAt(selectionner, 0).toString());
-                txtCc.setText(model.getValueAt(selectionner, 1).toString());
-                txtTp.setText(model.getValueAt(selectionner, 2).toString());
-                txtSn.setText(model.getValueAt(selectionner, 3).toString());
+                if(model.getValueAt(selectionner, 0).toString().equals("")){
+                    txtMat.setText("");
+                } else {
+                    txtMat.setText(model.getValueAt(selectionner, 0).toString());
+                }
+                if(model.getValueAt(selectionner, 1).toString()==null){
+                    txtCc.setText("");
+                } else {
+                    txtCc.setText(model.getValueAt(selectionner, 1).toString());
+                }
+                if(model.getValueAt(selectionner, 2).toString()==null){
+                    txtTp.setText("");
+                } else {
+                    txtTp.setText(model.getValueAt(selectionner, 2).toString());
+                }
+                if(model.getValueAt(selectionner, 3).toString()==null){
+                    txtSn.setText("");
+                } else {
+                    txtSn.setText(model.getValueAt(selectionner, 3).toString());
+                }
+                
             }
         });
-        
-    }
-    
-    public static void main(String[] args){
-        
-        ProfConnect en = new ProfConnect("Bernard","INF151");
-        en.setVisible(true);
         
     }
     
@@ -469,8 +494,5 @@ public class ProfConnect extends JFrame {
         scroll1.setBounds(10, 320, 770, 230);
         scroll1.setViewportView(table1);
     }
-                
-                
-}            
     
-
+}
