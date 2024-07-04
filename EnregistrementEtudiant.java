@@ -1,6 +1,6 @@
-package Etudiant;
+package SuperProf;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -23,7 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 public class EnregistrementEtudiant extends JFrame {
     
@@ -36,11 +36,15 @@ public class EnregistrementEtudiant extends JFrame {
     String path = null;
     Statement pst;
     
-    
-    public EnregistrementEtudiant(){
+    public EnregistrementEtudiant(String datab, String userx, String passx){
         
         super.setTitle("SuperProf");
-        super.setSize(1000, 600);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+        int desiredWidth = (int) (screenWidth*0.8);
+        int desiredHeight = (int) (screenHeight*0.8);
+        super.setSize(desiredWidth, desiredHeight);
         super.setLocationRelativeTo(null);
         super.setResizable(true);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,12 +54,18 @@ public class EnregistrementEtudiant extends JFrame {
         add(pn);
         pn.setBackground(new Color(50,50,100));
         
-        //String Ni = comboNiveau.getSelectedItem().toString();
-        //String Fi = comboFiliere.getSelectedItem().toString();
+        //
         
         lblTitre = new JLabel("ENREGISTREMENT COMPTE ETUDIANT");
-        lblTitre.setBounds(300,10, 600, 30);
-        lblTitre.setFont(new Font("Arial", Font.BOLD, 20));
+        lblTitre.setBounds(300,10, 600, 25);
+        lblTitre.setFont(new Font("Arial", Font.BOLD, 18));
+        lblTitre.setForeground(new Color(255,255,255));
+        //lblTitre.setLocation(400, 225);
+        pn.add(lblTitre);
+        
+        lblTitre = new JLabel("MAKING A STUDENT ACCOUNT");
+        lblTitre.setBounds(440,30, 600, 15);
+        lblTitre.setFont(new Font("Arial", Font.ITALIC, 12));
         lblTitre.setForeground(new Color(255,255,255));
         //lblTitre.setLocation(400, 225);
         pn.add(lblTitre);
@@ -71,7 +81,7 @@ public class EnregistrementEtudiant extends JFrame {
             
             private void btnPrecActionPerformed(ActionEvent evt) {
                 
-                Etudiant ecr = new Etudiant();
+                Etudiant ecr = new Etudiant(datab,userx,passx);
                 ecr.setVisible(true);
                 dispose();
                 
@@ -146,11 +156,10 @@ public class EnregistrementEtudiant extends JFrame {
         comboNiveau = new JComboBox();
         comboNiveau.setBounds(200,300,150,30);
         comboNiveau.setFont(new Font("Arial", Font.PLAIN, 14));
-        comboNiveau.addItem("");
+        comboNiveau.addItem(" ");
         comboNiveau.addItem("L1");
         comboNiveau.addItem("L2");
         comboNiveau.addItem("L3");
-        //*/
         pn.add(comboNiveau);
         
         lblFiliere = new JLabel("FILIERE");
@@ -162,7 +171,7 @@ public class EnregistrementEtudiant extends JFrame {
         comboFiliere = new JComboBox();
         comboFiliere.setBounds(200,340,150,30);
         comboFiliere.setFont(new Font("Arial", Font.PLAIN, 14));
-        comboFiliere.addItem("");
+        comboFiliere.addItem(" ");
         comboFiliere.addItem("INFORMATIQUE");
         comboFiliere.addItem("MATHEMATIQUES");
         comboFiliere.addItem("PHYSIQUE");
@@ -181,87 +190,44 @@ public class EnregistrementEtudiant extends JFrame {
         comboUe = new JComboBox();
         comboUe.setBounds(200,380,150,30);
         comboUe.setFont(new Font("Arial", Font.PLAIN, 14));
-        String n = comboNiveau.getSelectedItem().toString();
-        String f = comboFiliere.getSelectedItem().toString();
-        //
-        if(f.equals("INFORMATIQUE")){
-            if(n.equals("L1")){
-                comboUe.removeAllItems();
-                comboUe.setSelectedItem(null);
-                comboUe.addItem("");
-                comboUe.addItem("INF151");
-                comboUe.addItem("INF141");
-                comboUe.addItem("PHY161");
-                
-            } else if (n.equals("L2")){
-                comboUe.removeAllItems();
-                comboUe.setSelectedItem(null);
-                comboUe.addItem("");
-                comboUe.addItem("INF251");
-                comboUe.addItem("INF241");
-                comboUe.addItem("INF261");
-                
-            } else if (n.equals("L3")){
-                comboUe.removeAllItems();
-                comboUe.setSelectedItem(null);
-                comboUe.addItem("");
-                comboUe.addItem("INF351");
-                comboUe.addItem("INF341");
-                comboUe.addItem("INF361");
-                
-            }
-            
-        } else if (f.equals("MATHEMATIQUES")){
-            comboUe.removeAllItems();
-            comboUe.setSelectedItem(null);
-            comboUe.addItem("");
-            comboUe.addItem("INF151");
-            comboUe.addItem("INF141");
-            comboUe.addItem("PHY161");                
-        } else if (f.equals("PHYSIQUE")){
-            comboUe.removeAllItems();
-            comboUe.setSelectedItem(null);
-            comboUe.addItem("");
-            comboUe.addItem("INF151");
-            comboUe.addItem("INF141");
-            comboUe.addItem("PHY161");                
-        } else if (f.equals("CHIMIE")){
-            comboUe.removeAllItems();
-            comboUe.setSelectedItem(null);
-            comboUe.addItem("");
-            comboUe.addItem("INF151");
-            comboUe.addItem("INF141");
-            comboUe.addItem("PHY161");                
-        } else if (f.equals("GEOSCIENCES")){
-            if(n.equals("L1")){
-                comboUe.removeAllItems();
-                comboUe.setSelectedItem(null);
-                comboUe.addItem("");
-                comboUe.addItem("BIO121");
-                comboUe.addItem("MAT151");
-                comboUe.addItem("INF111");
-            } else if (n.equals("L2")){
-                comboUe.removeAllItems();
-                comboUe.setSelectedItem(null);
-                comboUe.addItem("");
-                comboUe.addItem("BIO221");
-                comboUe.addItem("MAT251");
-                comboUe.addItem("INF211");
-            } else if (n.equals("L3")){
-                comboUe.removeAllItems();
-                comboUe.setSelectedItem(null);
-                comboUe.addItem("");
-                comboUe.addItem("BIO151");
-                comboUe.addItem("MAT141");
-                comboUe.addItem("INF161");
-            }
-                            
-        } else if (f.equals("BIOSCIENCES")){
-                            
-        } else if (f.equals("ICT4D")){
-                            
-        }
-        //*/
+        comboUe.addItem(" ");
+        comboUe.addItem("INF151");
+        comboUe.addItem("INF141");
+        comboUe.addItem("PHY161");
+        comboUe.addItem("INF251");
+        comboUe.addItem("INF241");
+        comboUe.addItem("INF261");
+        comboUe.addItem("INF351");
+        comboUe.addItem("INF341");
+        comboUe.addItem("INF361");
+        comboUe.addItem("BIO131");
+        comboUe.addItem("PHY111");
+        comboUe.addItem("PHY121");
+        comboUe.addItem("BIO251");
+        comboUe.addItem("PHY211");
+        comboUe.addItem("PHY221");
+        comboUe.addItem("INF111");
+        comboUe.addItem("INF161");
+        comboUe.addItem("INF221");
+        comboUe.addItem("INF281");
+        comboUe.addItem("BIO141");
+        comboUe.addItem("PHY181");
+        comboUe.addItem("BIO281");
+        comboUe.addItem("PHY291");
+        comboUe.addItem("PHY131");
+        comboUe.addItem("MAT151");
+        comboUe.addItem("INF111");
+        comboUe.addItem("BIO261");
+        comboUe.addItem("CHI261");
+        comboUe.addItem("PHY131");
+        comboUe.addItem("MAT151");
+        comboUe.addItem("INF111");
+        comboUe.addItem("BIO261");
+        comboUe.addItem("INF261");
+        comboUe.addItem("BCH351");
+        comboUe.addItem("BCH361");
+        comboUe.addItem("BCH371");
+        comboUe.addItem("BCH381");
         pn.add(comboUe);
         
         lblUe2 = new JLabel("UE OPTIONELLE 2");
@@ -273,174 +239,44 @@ public class EnregistrementEtudiant extends JFrame {
         comboUe2 = new JComboBox();
         comboUe2.setBounds(200,420,150,30);
         comboUe2.setFont(new Font("Arial", Font.PLAIN, 14));
-        comboUe2.addItem("");
-        
-        //
-        if(f.equals("INFORMATIQUE")){
-            
-            if(n.equals("L1")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                           
-            } else if (n.equals("L2")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            } else if (n.equals("L3")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            }
-            
-        } else if (f.equals("MATHEMATIQUES")){
-            if(n.equals("L1")){
-                 comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                           
-            } else if (n.equals("L2")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            } else if (n.equals("L3")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            }                
-        } else if (f.equals("PHYSIQUE")){
-            if(n.equals("L1")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            } else if (n.equals("L2")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            } else if (n.equals("L3")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            }                
-        } else if (f.equals("CHIMIE")){
-            if(n.equals("L1")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            } else if (n.equals("L2")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            } else if (n.equals("L3")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            }                
-        } else if (f.equals("GEOSCIENCES")){
-            if(n.equals("L1")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            } else if (n.equals("L2")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            } else if (n.equals("L3")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            }                
-        } else if (f.equals("BIOSCIENCES")){
-            if(n.equals("L1")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            } else if(n.equals("L2")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            } else if (n.equals("L3")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            }                
-        } else if (f.equals("ICT4D")){
-            if(n.equals("L1")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            } else if (n.equals("L2")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF252");
-                comboUe2.addItem("INF242");
-                comboUe2.addItem("INF262");
-                            
-            } else if (n.equals("L3")){
-                comboUe2.removeAllItems();
-                comboUe2.addItem("");
-                comboUe2.addItem("INF352");
-                comboUe2.addItem("INF342");
-                comboUe2.addItem("INF362");
-                            
-            }                
-        }
-        //*/
+        comboUe2.addItem(" ");
+        comboUe2.addItem("INF152");
+        comboUe2.addItem("INF142");
+        comboUe2.addItem("PHY162");
+        comboUe2.addItem("INF252");
+        comboUe2.addItem("INF242");
+        comboUe2.addItem("INF262");
+        comboUe2.addItem("INF352");
+        comboUe2.addItem("INF342");
+        comboUe2.addItem("INF362");
+        comboUe2.addItem("BIO132");
+        comboUe2.addItem("PHY112");
+        comboUe2.addItem("PHY122");
+        comboUe2.addItem("BIO252");
+        comboUe2.addItem("PHY212");
+        comboUe2.addItem("PHY222");
+        comboUe2.addItem("INF112");
+        comboUe2.addItem("INF162");
+        comboUe2.addItem("INF222");
+        comboUe2.addItem("INF282");
+        comboUe2.addItem("BIO142");
+        comboUe2.addItem("PHY182");
+        comboUe2.addItem("BIO282");
+        comboUe2.addItem("PHY292");
+        comboUe2.addItem("PHY132");
+        comboUe2.addItem("MAT152");
+        comboUe2.addItem("INF112");
+        comboUe2.addItem("BIO262");
+        comboUe2.addItem("CHI262");
+        comboUe2.addItem("PHY132");
+        comboUe2.addItem("MAT152");
+        comboUe2.addItem("INF112");
+        comboUe2.addItem("BIO262");
+        comboUe2.addItem("INF262");
+        comboUe2.addItem("BCH352");
+        comboUe2.addItem("BCH362");
+        comboUe2.addItem("BCH372");
+        comboUe2.addItem("BCH382");
         pn.add(comboUe2);
         
         lblUet = new JLabel("UE TRANSVERSALE");
@@ -452,19 +288,19 @@ public class EnregistrementEtudiant extends JFrame {
         comboUet = new JComboBox();
         comboUet.setBounds(200,460,150,30);
         comboUet.setFont(new Font("Arial", Font.PLAIN, 14));
-        comboUet.addItem("");
-        //
-        if(n.equals("L1")){
-            comboUet.addItem("ANG111");
-            comboUet.addItem("FRA111");
-        } else if (n.equals("L2")){
-            comboUet.addItem("ANG211");
-            comboUet.addItem("FRA211");            
-        } else if (n.equals("L3")){
-            comboUet.addItem("ANG311");
-            comboUet.addItem("FRA311");            
-        }
-        //*/
+        comboUet.addItem(" ");
+        comboUet.addItem("FRA111");
+        comboUet.addItem("ANG111");
+        comboUet.addItem("FRA211");
+        comboUet.addItem("ANG211");
+        comboUet.addItem("FRA311");
+        comboUet.addItem("ANG311");
+        comboUet.addItem("FRA104");
+        comboUet.addItem("ANG104");
+        comboUet.addItem("FRA204");
+        comboUet.addItem("ANG204");
+        comboUet.addItem("FRA304");
+        comboUet.addItem("ANG304");
         pn.add(comboUet);
         
         btnenregistrer = new JButton("ENREGISTRER");
@@ -476,25 +312,30 @@ public class EnregistrementEtudiant extends JFrame {
         btnenregistrer.addActionListener(new ActionListener(){
             
             public void actionPerformed(ActionEvent ev){
-                String Id, Mdp, Mat, Nom, Sexe, Fil, Niv, Ue, Ue2, Uet;
+                String Id, Mdp, Mat, Nom, Sex="", Fil, Niv, Ue, Ue2, Uet;
                 
+              if((comboSexe.getSelectedItem()==null)||(comboFiliere.getSelectedItem()==null)||(comboNiveau.getSelectedItem()==null)||(comboUe.getSelectedItem()==null)||(comboUe2.getSelectedItem()==null)||(comboUet.getSelectedItem()==null)||(txtIdentifiant.getText()==null)||(txtMdp.getText()==null)||(txtMat.getText()==null)||(txtNom.getText()==null)){
+                    JOptionPane.showMessageDialog(null,"Veuillez entrer toutes vos informations !",null,JOptionPane.ERROR_MESSAGE);
+              } else {
                 Id = txtIdentifiant.getText();
                 Mdp = txtMdp.getText();
                 Mat = txtMat.getText();
                 Nom = txtNom.getText();
-                Sexe = comboSexe.getSelectedItem().toString();
+                if(comboSexe.getSelectedItem()==null){
+                    
+                } else
+                Sex = comboSexe.getSelectedItem().toString();
                 Fil = comboFiliere.getSelectedItem().toString();
                 Niv = comboNiveau.getSelectedItem().toString();
                 Ue = comboUe.getSelectedItem().toString();
                 Ue2 = comboUe2.getSelectedItem().toString();
                 Uet = comboUet.getSelectedItem().toString();
                 
-                Connect con = new Connect();
+                Connect con = new Connect(datab,userx,passx);
                 
                 try {
                     if(Fil=="INFORMATIQUE"){
                         if(Niv=="L1"){
-                            
                             String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
                             PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
                             ps0.setString(1,"INF111");
@@ -647,23 +488,118 @@ public class EnregistrementEtudiant extends JFrame {
                             PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
                             ps0.setString(1,"INF311");
                             ps0.setString(2, Mat);
-                            ps0.setInt(3,6);
+                            ps0.setInt(3,4);
                             ps0.executeUpdate();
                             String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
                             PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
                             ps1.setString(1,"INF321");
                             ps1.setString(2, Mat);
-                            ps1.setInt(3,6);
+                            ps1.setInt(3,4);
                             ps1.executeUpdate();
                             String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
                             PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
                             ps2.setString(1,"INF331");
                             ps2.setString(2, Mat);
+                            ps2.setInt(3,4);
+                            ps2.executeUpdate();
+                            String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
+                            ps3.setString(1,"INF371");
+                            ps3.setString(2, Mat);
+                            ps3.setInt(3,4);
+                            ps3.executeUpdate();
+                            String rq31 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps31 = con.maConnection().prepareStatement(rq31);
+                            ps31.setString(1,"INF381");
+                            ps31.setString(2, Mat);
+                            ps31.setInt(3,4);
+                            ps31.executeUpdate();
+                            String rq4 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps4 = con.maConnection().prepareStatement(rq4);
+                            ps4.setString(1,Ue);
+                            ps4.setString(2, Mat);
+                            ps4.setInt(3,4);
+                            ps4.executeUpdate();
+                            String rqt = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,"FRA311");
+                            pst.setString(2, Mat);
+                            pst.setInt(3,3);
+                            pst.executeUpdate();
+                            String rqt1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst1 = con.maConnection().prepareStatement(rqt1);
+                            pst1.setString(1,"ENG311");
+                            pst1.setString(2, Mat);
+                            pst1.setInt(3,3);
+                            pst1.executeUpdate();
+                            
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"INF312");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,4);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"INF322");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,4);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"INF332");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,4);
+                            ps7.executeUpdate();
+                            String rq8 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps8 = con.maConnection().prepareStatement(rq8);
+                            ps8.setString(1,"INF372");
+                            ps8.setString(2, Mat);
+                            ps8.setInt(3,4);
+                            ps8.executeUpdate();
+                            String rq81 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps81 = con.maConnection().prepareStatement(rq81);
+                            ps81.setString(1,"INF382");
+                            ps81.setString(2, Mat);
+                            ps81.setInt(3,4);
+                            ps81.executeUpdate();
+                            String rq9 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps9 = con.maConnection().prepareStatement(rq9);
+                            ps9.setString(1,Ue2);
+                            ps9.setString(2, Mat);
+                            ps9.setInt(3,4);
+                            ps9.executeUpdate();
+                            String rq10 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps10 = con.maConnection().prepareStatement(rq10);
+                            ps10.setString(1,"PPE312");
+                            ps10.setString(2, Mat);
+                            ps10.setInt(3,6);
+                            ps10.executeUpdate();
+                        }
+                        
+                    } else if (Fil=="MATHEMATIQUES"){
+                        if(Niv=="L1"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"MAT111");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,6);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"MAT121");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,6);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"MAT131");
+                            ps2.setString(2, Mat);
                             ps2.setInt(3,6);
                             ps2.executeUpdate();
                             String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
                             PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
-                            ps3.setString(1,"INF341");
+                            ps3.setString(1,"INF111");
                             ps3.setString(2, Mat);
                             ps3.setInt(3,6);
                             ps3.executeUpdate();
@@ -682,25 +618,25 @@ public class EnregistrementEtudiant extends JFrame {
                             
                             String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
                             PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
-                            ps5.setString(1,"INF112");
+                            ps5.setString(1,"MAT112");
                             ps5.setString(2, Mat);
                             ps5.setInt(3,6);
                             ps5.executeUpdate();
                             String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
                             PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
-                            ps6.setString(1,"INF122");
+                            ps6.setString(1,"MAT122");
                             ps6.setString(2, Mat);
                             ps6.setInt(3,6);
                             ps6.executeUpdate();
                             String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
                             PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
-                            ps7.setString(1,"INF132");
+                            ps7.setString(1,"MAT132");
                             ps7.setString(2, Mat);
                             ps7.setInt(3,6);
                             ps7.executeUpdate();
                             String rq8 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
                             PreparedStatement ps8 = con.maConnection().prepareStatement(rq8);
-                            ps8.setString(1,"MAT112");
+                            ps8.setString(1,"INF112");
                             ps8.setString(2, Mat);
                             ps8.setInt(3,6);
                             ps8.executeUpdate();
@@ -716,80 +652,1348 @@ public class EnregistrementEtudiant extends JFrame {
                             ps10.setString(2, Mat);
                             ps10.setInt(3,3);
                             ps10.executeUpdate();
-                        }
-                        
-                    } else if (Fil=="MATHEMATIQUES"){
-                        
-                        if(Niv=="L1"){
-                            
-                            
-                            
                         } else if (Niv=="L2"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"MAT211");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,6);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"MAT221");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,6);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"MAT231");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,6);
+                            ps2.executeUpdate();
+                            String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
+                            ps3.setString(1,"INF231");
+                            ps3.setString(2, Mat);
+                            ps3.setInt(3,6);
+                            ps3.executeUpdate();
+                            String rq4 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps4 = con.maConnection().prepareStatement(rq4);
+                            ps4.setString(1,Ue);
+                            ps4.setString(2, Mat);
+                            ps4.setInt(3,3);
+                            ps4.executeUpdate();
+                            String rqt = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,"ENG232");
+                            pst.setString(2, Mat);
+                            pst.setInt(3,3);
+                            pst.executeUpdate();
                             
-                            
-                            
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"MAT212");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,6);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"MAT222");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,6);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"MAT132");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,6);
+                            ps7.executeUpdate();
+                            String rq8 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps8 = con.maConnection().prepareStatement(rq8);
+                            ps8.setString(1,"INF232");
+                            ps8.setString(2, Mat);
+                            ps8.setInt(3,6);
+                            ps8.executeUpdate();
+                            String rq9 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps9 = con.maConnection().prepareStatement(rq9);
+                            ps9.setString(1,Ue2);
+                            ps9.setString(2, Mat);
+                            ps9.setInt(3,3);
+                            ps9.executeUpdate();
+                            String rq10 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps10 = con.maConnection().prepareStatement(rq10);
+                            ps10.setString(1,"PPE212");
+                            ps10.setString(2, Mat);
+                            ps10.setInt(3,3);
+                            ps10.executeUpdate();
                         } else if (Niv=="L3"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"MAT311");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,6);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"MAT321");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,6);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"MAT331");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,6);
+                            ps2.executeUpdate();
+                            String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
+                            ps3.setString(1,"MAT331");
+                            ps3.setString(2, Mat);
+                            ps3.setInt(3,6);
+                            ps3.executeUpdate();
+                            String rqt = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,"ENG352");
+                            pst.setString(2, Mat);
+                            pst.setInt(3,6);
+                            pst.executeUpdate();
                             
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"MAT312");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,6);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"MAT322");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,6);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"MAT332");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,6);
+                            ps7.executeUpdate();
+                            String rq8 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps8 = con.maConnection().prepareStatement(rq8);
+                            ps8.setString(1,"MAT342");
+                            ps8.setString(2, Mat);
+                            ps8.setInt(3,6);
+                            ps8.executeUpdate();
+                            String rq10 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps10 = con.maConnection().prepareStatement(rq10);
+                            ps10.setString(1,"PPE312");
+                            ps10.setString(2, Mat);
+                            ps10.setInt(3,6);
+                            ps10.executeUpdate();
                         }
                         
                     } else if (Fil=="PHYSIQUE"){
-                        
-                        if(Niv=="L1"){
+                        if(Niv=="L2"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"PHY211");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,6);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"PHY221");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,6);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"CHI261");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,3);
+                            ps2.executeUpdate();
+                            String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
+                            ps3.setString(1,"MAT251");
+                            ps3.setString(2, Mat);
+                            ps3.setInt(3,6);
+                            ps3.executeUpdate();
+                            String rq4 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps4 = con.maConnection().prepareStatement(rq4);
+                            ps4.setString(1,Ue);
+                            ps4.setString(2, Mat);
+                            ps4.setInt(3,3);
+                            ps4.executeUpdate();
+                            String rqt = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,"FRA211");
+                            pst.setString(2, Mat);
+                            pst.setInt(3,3);
+                            pst.executeUpdate();
+                            String rqt1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst1 = con.maConnection().prepareStatement(rqt1);
+                            pst1.setString(1,"ENG211");
+                            pst1.setString(2, Mat);
+                            pst1.setInt(3,3);
+                            pst1.executeUpdate();
                             
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"PHY212");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,6);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"PHY222");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,6);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"CHI262");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,6);
+                            ps7.executeUpdate();
+                            String rq8 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps8 = con.maConnection().prepareStatement(rq8);
+                            ps8.setString(1,"MAT252");
+                            ps8.setString(2, Mat);
+                            ps8.setInt(3,6);
+                            ps8.executeUpdate();
+                            String rq9 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps9 = con.maConnection().prepareStatement(rq9);
+                            ps9.setString(1,Ue2);
+                            ps9.setString(2, Mat);
+                            ps9.setInt(3,3);
+                            ps9.executeUpdate();
+                            String rq10 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps10 = con.maConnection().prepareStatement(rq10);
+                            ps10.setString(1,"PPE212");
+                            ps10.setString(2, Mat);
+                            ps10.setInt(3,3);
+                            ps10.executeUpdate();
+                        } else if (Niv=="L1"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"PHY111");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,6);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"PHY121");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,6);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"CHI141");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,6);
+                            ps2.executeUpdate();
+                            String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
+                            ps3.setString(1,"MAT161");
+                            ps3.setString(2, Mat);
+                            ps3.setInt(3,6);
+                            ps3.executeUpdate();
+                            String rq4 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps4 = con.maConnection().prepareStatement(rq4);
+                            ps4.setString(1,Ue);
+                            ps4.setString(2, Mat);
+                            ps4.setInt(3,3);
+                            ps4.executeUpdate();
+                            String rqt = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,Uet);
+                            pst.setString(2, Mat);
+                            pst.setInt(3,3);
+                            pst.executeUpdate();
                             
-                            
-                        } else if (Niv=="L2"){
-                            
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"PHY112");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,6);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"PHY122");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,6);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"CHI142");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,6);
+                            ps7.executeUpdate();
+                            String rq8 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps8 = con.maConnection().prepareStatement(rq8);
+                            ps8.setString(1,"MAT162");
+                            ps8.setString(2, Mat);
+                            ps8.setInt(3,6);
+                            ps8.executeUpdate();
+                            String rq9 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps9 = con.maConnection().prepareStatement(rq9);
+                            ps9.setString(1,Ue2);
+                            ps9.setString(2, Mat);
+                            ps9.setInt(3,3);
+                            ps9.executeUpdate();
+                            String rq10 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps10 = con.maConnection().prepareStatement(rq10);
+                            ps10.setString(1,"PPE112");
+                            ps10.setString(2, Mat);
+                            ps10.setInt(3,3);
+                            ps10.executeUpdate();
                         } else if (Niv=="L3"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"PHY311");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,3);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"PHY321");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,3);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"PHY331");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,3);
+                            ps2.executeUpdate();
+                            String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
+                            ps3.setString(1,"PHY341");
+                            ps3.setString(2, Mat);
+                            ps3.setInt(3,3);
+                            ps3.executeUpdate();
+                            String rq4 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps4 = con.maConnection().prepareStatement(rq4);
+                            ps4.setString(1,"PHY351");
+                            ps4.setString(2, Mat);
+                            ps4.setInt(3,3);
+                            ps4.executeUpdate();
+                            String rq41 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps41 = con.maConnection().prepareStatement(rq41);
+                            ps41.setString(1,"PHY361");
+                            ps41.setString(2, Mat);
+                            ps41.setInt(3,3);
+                            ps41.executeUpdate();
+                            String rq42 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps42 = con.maConnection().prepareStatement(rq42);
+                            ps42.setString(1,"PHY371");
+                            ps42.setString(2, Mat);
+                            ps42.setInt(3,3);
+                            ps42.executeUpdate();
+                            String rq43 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps43 = con.maConnection().prepareStatement(rq43);
+                            ps43.setString(1,"PHY381");
+                            ps43.setString(2, Mat);
+                            ps43.setInt(3,3);
+                            ps43.executeUpdate();
+                            String rq44 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps44 = con.maConnection().prepareStatement(rq44);
+                            ps44.setString(1,"PHY391");
+                            ps44.setString(2, Mat);
+                            ps44.setInt(3,2);
+                            ps44.executeUpdate();
+                            String rqt = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,"FRA311");
+                            pst.setString(2, Mat);
+                            pst.setInt(3,2);
+                            pst.executeUpdate();
+                            String rqt1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst1 = con.maConnection().prepareStatement(rqt1);
+                            pst1.setString(1,"ENG311");
+                            pst1.setString(2, Mat);
+                            pst1.setInt(3,2);
+                            pst1.executeUpdate();
                             
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"PHY312");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,3);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"PHY322");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,3);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"PHY332");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,3);
+                            ps7.executeUpdate();
+                            String rq8 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps8 = con.maConnection().prepareStatement(rq8);
+                            ps8.setString(1,"PHY342");
+                            ps8.setString(2, Mat);
+                            ps8.setInt(3,3);
+                            ps8.executeUpdate();
+                            String rq9 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps9 = con.maConnection().prepareStatement(rq9);
+                            ps9.setString(1,"PHY352");
+                            ps9.setString(2, Mat);
+                            ps9.setInt(3,3);
+                            ps9.executeUpdate();
+                            String rq91 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps91 = con.maConnection().prepareStatement(rq91);
+                            ps91.setString(1,"PHY362");
+                            ps91.setString(2, Mat);
+                            ps91.setInt(3,3);
+                            ps91.executeUpdate();
+                            String rq92 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps92 = con.maConnection().prepareStatement(rq92);
+                            ps92.setString(1,"PHY372");
+                            ps92.setString(2, Mat);
+                            ps92.setInt(3,3);
+                            ps92.executeUpdate();
+                            String rq93 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps93 = con.maConnection().prepareStatement(rq93);
+                            ps93.setString(1,"PHY382");
+                            ps93.setString(2, Mat);
+                            ps93.setInt(3,3);
+                            ps93.executeUpdate();
+                            String rq94 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps94 = con.maConnection().prepareStatement(rq94);
+                            ps94.setString(1,"PHY392");
+                            ps94.setString(2, Mat);
+                            ps94.setInt(3,3);
+                            ps94.executeUpdate();
+                            String rq10 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps10 = con.maConnection().prepareStatement(rq10);
+                            ps10.setString(1,"PPE312");
+                            ps10.setString(2, Mat);
+                            ps10.setInt(3,3);
+                            ps10.executeUpdate();
                         }
                         
                     } else if (Fil=="GEOSCIENCES"){
-                        
                         if(Niv=="L1"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"BIO111");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,6);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"BIO121");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,6);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"CHI131");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,6);
+                            ps2.executeUpdate();
+                            String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
+                            ps3.setString(1,"GEO111");
+                            ps3.setString(2, Mat);
+                            ps3.setInt(3,6);
+                            ps3.executeUpdate();
+                            String rq4 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps4 = con.maConnection().prepareStatement(rq4);
+                            ps4.setString(1,Ue);
+                            ps4.setString(2, Mat);
+                            ps4.setInt(3,3);
+                            ps4.executeUpdate();
+                            String rqt = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,Uet);
+                            pst.setString(2, Mat);
+                            pst.setInt(3,3);
+                            pst.executeUpdate();
                             
-                            
-                            
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"BIO112");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,6);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"BIO122");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,6);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"CHI132");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,6);
+                            ps7.executeUpdate();
+                            String rq8 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps8 = con.maConnection().prepareStatement(rq8);
+                            ps8.setString(1,"GEO112");
+                            ps8.setString(2, Mat);
+                            ps8.setInt(3,6);
+                            ps8.executeUpdate();
+                            String rq9 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps9 = con.maConnection().prepareStatement(rq9);
+                            ps9.setString(1,Ue2);
+                            ps9.setString(2, Mat);
+                            ps9.setInt(3,3);
+                            ps9.executeUpdate();
+                            String rq10 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps10 = con.maConnection().prepareStatement(rq10);
+                            ps10.setString(1,"PPE112");
+                            ps10.setString(2, Mat);
+                            ps10.setInt(3,3);
+                            ps10.executeUpdate();
                         } else if (Niv=="L2"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"GEO213");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,6);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"GEO224");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,6);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"GEO233");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,6);
+                            ps2.executeUpdate();
+                            String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
+                            ps3.setString(1,"ENG242");
+                            ps3.setString(2, Mat);
+                            ps3.setInt(3,6);
+                            ps3.executeUpdate();
+                            String rq4 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps4 = con.maConnection().prepareStatement(rq4);
+                            ps4.setString(1,Ue);
+                            ps4.setString(2, Mat);
+                            ps4.setInt(3,3);
+                            ps4.executeUpdate();
+                            String rqt = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,"FRA242");
+                            pst.setString(2, Mat);
+                            pst.setInt(3,3);
+                            pst.executeUpdate();
                             
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"GEO216");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,6);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"GEO226");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,6);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"GEO236");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,6);
+                            ps7.executeUpdate();
+                            String rq8 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps8 = con.maConnection().prepareStatement(rq8);
+                            ps8.setString(1,"GEO246");
+                            ps8.setString(2, Mat);
+                            ps8.setInt(3,6);
+                            ps8.executeUpdate();
+                            String rq9 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps9 = con.maConnection().prepareStatement(rq9);
+                            ps9.setString(1,Ue2);
+                            ps9.setString(2, Mat);
+                            ps9.setInt(3,3);
+                            ps9.executeUpdate();
+                            String rq10 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps10 = con.maConnection().prepareStatement(rq10);
+                            ps10.setString(1,"PPE212");
+                            ps10.setString(2, Mat);
+                            ps10.setInt(3,3);
+                            ps10.executeUpdate();
                         } else if (Niv=="L3"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"GEO315");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,6);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"GEO325");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,6);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"GEO335");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,6);
+                            ps2.executeUpdate();
+                            String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
+                            ps3.setString(1,"GEO345");
+                            ps3.setString(2, Mat);
+                            ps3.setInt(3,6);
+                            ps3.executeUpdate();
+                            String rq4 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps4 = con.maConnection().prepareStatement(rq4);
+                            ps4.setString(1,"GEO355");
+                            ps4.setString(2, Mat);
+                            ps4.setInt(3,3);
+                            ps4.executeUpdate();
+                            String rqt = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,Uet);
+                            pst.setString(2, Mat);
+                            pst.setInt(3,3);
+                            pst.executeUpdate();
                             
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"GEO316");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,6);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"GEO326");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,6);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"GEO336");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,6);
+                            ps7.executeUpdate();
+                            String rq8 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps8 = con.maConnection().prepareStatement(rq8);
+                            ps8.setString(1,"GEO346");
+                            ps8.setString(2, Mat);
+                            ps8.setInt(3,6);
+                            ps8.executeUpdate();
+                            String rq9 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps9 = con.maConnection().prepareStatement(rq9);
+                            ps9.setString(1,"GEO356");
+                            ps9.setString(2, Mat);
+                            ps9.setInt(3,3);
+                            ps9.executeUpdate();
+                            String rq10 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps10 = con.maConnection().prepareStatement(rq10);
+                            ps10.setString(1,"PPE312");
+                            ps10.setString(2, Mat);
+                            ps10.setInt(3,3);
+                            ps10.executeUpdate();
                         }
                         
                     } else if (Fil=="BIOSCIENCES"){
-                        
                         if(Niv=="L1"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"BIO111");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,6);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"BIO121");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,6);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"CHI131");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,6);
+                            ps2.executeUpdate();
+                            String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
+                            ps3.setString(1,"GEO111");
+                            ps3.setString(2, Mat);
+                            ps3.setInt(3,6);
+                            ps3.executeUpdate();
+                            String rq4 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps4 = con.maConnection().prepareStatement(rq4);
+                            ps4.setString(1,Ue);
+                            ps4.setString(2, Mat);
+                            ps4.setInt(3,3);
+                            ps4.executeUpdate();
+                            String rqt = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,Uet);
+                            pst.setString(2, Mat);
+                            pst.setInt(3,3);
+                            pst.executeUpdate();
                             
-                            
-                            
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"BIO112");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,6);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"BIO122");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,6);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"CHI132");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,6);
+                            ps7.executeUpdate();
+                            String rq8 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps8 = con.maConnection().prepareStatement(rq8);
+                            ps8.setString(1,"GEO112");
+                            ps8.setString(2, Mat);
+                            ps8.setInt(3,6);
+                            ps8.executeUpdate();
+                            String rq9 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps9 = con.maConnection().prepareStatement(rq9);
+                            ps9.setString(1,Ue2);
+                            ps9.setString(2, Mat);
+                            ps9.setInt(3,3);
+                            ps9.executeUpdate();
+                            String rq10 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps10 = con.maConnection().prepareStatement(rq10);
+                            ps10.setString(1,"PPE112");
+                            ps10.setString(2, Mat);
+                            ps10.setInt(3,3);
+                            ps10.executeUpdate();
                         } else if (Niv=="L2"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"BIO211");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,6);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"BIO221");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,6);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"BIO231");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,6);
+                            ps2.executeUpdate();
+                            String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
+                            ps3.setString(1,"BIO241");
+                            ps3.setString(2, Mat);
+                            ps3.setInt(3,6);
+                            ps3.executeUpdate();
+                            String rq4 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps4 = con.maConnection().prepareStatement(rq4);
+                            ps4.setString(1,Ue);
+                            ps4.setString(2, Mat);
+                            ps4.setInt(3,3);
+                            ps4.executeUpdate();
+                            String rqt = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,"ENGL2013");
+                            pst.setString(2, Mat);
+                            pst.setInt(3,3);
+                            pst.executeUpdate();
                             
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"BIO212");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,6);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"BIO222");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,6);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"BIO232");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,6);
+                            ps7.executeUpdate();
+                            String rq8 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps8 = con.maConnection().prepareStatement(rq8);
+                            ps8.setString(1,"BIO242");
+                            ps8.setString(2, Mat);
+                            ps8.setInt(3,6);
+                            ps8.executeUpdate();
+                            String rq9 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps9 = con.maConnection().prepareStatement(rq9);
+                            ps9.setString(1,Ue2);
+                            ps9.setString(2, Mat);
+                            ps9.setInt(3,3);
+                            ps9.executeUpdate();
+                            String rq10 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps10 = con.maConnection().prepareStatement(rq10);
+                            ps10.setString(1,"PPE212");
+                            ps10.setString(2, Mat);
+                            ps10.setInt(3,3);
+                            ps10.executeUpdate();
                         } else if (Niv=="L3"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"BIO311");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,6);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"BIO321");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,6);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"BIO331");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,6);
+                            ps2.executeUpdate();
+                            String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
+                            ps3.setString(1,"PPE311");
+                            ps3.setString(2, Mat);
+                            ps3.setInt(3,6);
+                            ps3.executeUpdate();
+                            String rq4 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps4 = con.maConnection().prepareStatement(rq4);
+                            ps4.setString(1,Ue);
+                            ps4.setString(2, Mat);
+                            ps4.setInt(3,6);
+                            ps4.executeUpdate();
                             
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"BIO312");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,6);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"BIO322");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,6);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"BIO332");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,6);
+                            ps7.executeUpdate();
+                            String rq9 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps9 = con.maConnection().prepareStatement(rq9);
+                            ps9.setString(1,Ue2);
+                            ps9.setString(2, Mat);
+                            ps9.setInt(3,6);
+                            ps9.executeUpdate();
+                            String rq10 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps10 = con.maConnection().prepareStatement(rq10);
+                            ps10.setString(1,"PPE312");
+                            ps10.setString(2, Mat);
+                            ps10.setInt(3,6);
+                            ps10.executeUpdate();
                         }
                         
-                    } else if (Fil=="CHIMIE"){
-                        
+                    } else if (Fil=="CHIMIE"){ 
                         if(Niv=="L1"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"CHI111");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,6);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"PHY111");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,6);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"MAT111");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,6);
+                            ps2.executeUpdate();
+                            String rq4 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps4 = con.maConnection().prepareStatement(rq4);
+                            ps4.setString(1,Ue);
+                            ps4.setString(2, Mat);
+                            ps4.setInt(3,6);
+                            ps4.executeUpdate();
+                            String rqt = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,Uet);
+                            pst.setString(2, Mat);
+                            pst.setInt(3,6);
+                            pst.executeUpdate();
                             
-                            
-                            
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"CHI112");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,6);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"PHY112");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,6);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"MAT112");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,6);
+                            ps7.executeUpdate();
+                            String rq9 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps9 = con.maConnection().prepareStatement(rq9);
+                            ps9.setString(1,Ue2);
+                            ps9.setString(2, Mat);
+                            ps9.setInt(3,3);
+                            ps9.executeUpdate();
+                            String rq10 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps10 = con.maConnection().prepareStatement(rq10);
+                            ps10.setString(1,"PPE112");
+                            ps10.setString(2, Mat);
+                            ps10.setInt(3,3);
+                            ps10.executeUpdate();
                         } else if (Niv=="L2"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"CHI211");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,6);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"CHI211");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,6);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"PHY211");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,6);
+                            ps2.executeUpdate();
+                            String rq4 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps4 = con.maConnection().prepareStatement(rq4);
+                            ps4.setString(1,Ue);
+                            ps4.setString(2, Mat);
+                            ps4.setInt(3,6);
+                            ps4.executeUpdate();
+                            String rqt = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,"ANG221");
+                            pst.setString(2, Mat);
+                            pst.setInt(3,6);
+                            pst.executeUpdate();
                             
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"CHI212");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,6);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"CHI222");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,6);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"PHY212");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,6);
+                            ps7.executeUpdate();
+                            String rq9 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps9 = con.maConnection().prepareStatement(rq9);
+                            ps9.setString(1,Ue2);
+                            ps9.setString(2, Mat);
+                            ps9.setInt(3,3);
+                            ps9.executeUpdate();
+                            String rq10 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps10 = con.maConnection().prepareStatement(rq10);
+                            ps10.setString(1,"PPE212");
+                            ps10.setString(2, Mat);
+                            ps10.setInt(3,3);
+                            ps10.executeUpdate();
                         } else if (Niv=="L3"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"CHI311");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,4);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"CHI321");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,4);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"CHI331");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,4);
+                            ps2.executeUpdate();
+                            String rq4 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps4 = con.maConnection().prepareStatement(rq4);
+                            ps4.setString(1,"CHI341");
+                            ps4.setString(2, Mat);
+                            ps4.setInt(3,4);
+                            ps4.executeUpdate();
+                            String rqt = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,"CHI351");
+                            pst.setString(2, Mat);
+                            pst.setInt(3,4);
+                            pst.executeUpdate();
+                            String rqt1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst1 = con.maConnection().prepareStatement(rqt1);
+                            pst1.setString(1,"CHI361");
+                            pst1.setString(2, Mat);
+                            pst1.setInt(3,4);
+                            pst1.executeUpdate();
+                            String rqt2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst2 = con.maConnection().prepareStatement(rqt2);
+                            pst2.setString(1,"BCH351");
+                            pst2.setString(2, Mat);
+                            pst2.setInt(3,2);
+                            pst2.executeUpdate();
+                            String rqt3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst3 = con.maConnection().prepareStatement(rqt3);
+                            pst3.setString(1,"FRA321");
+                            pst3.setString(2, Mat);
+                            pst3.setInt(3,2);
+                            pst3.executeUpdate();
+                            String rqt4 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst4 = con.maConnection().prepareStatement(rqt4);
+                            pst4.setString(1,"ANG321");
+                            pst4.setString(2, Mat);
+                            pst4.setInt(3,2);
+                            pst4.executeUpdate();
                             
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"CHI312");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,4);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"CHI322");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,4);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"CHI332");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,4);
+                            ps7.executeUpdate();
+                            String rq9 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps9 = con.maConnection().prepareStatement(rq9);
+                            ps9.setString(1,"CHI342");
+                            ps9.setString(2, Mat);
+                            ps9.setInt(3,4);
+                            ps9.executeUpdate();
+                            String rq91 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps91 = con.maConnection().prepareStatement(rq91);
+                            ps91.setString(1,"CHI352");
+                            ps91.setString(2, Mat);
+                            ps91.setInt(3,4);
+                            ps91.executeUpdate();
+                            String rq92 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps92 = con.maConnection().prepareStatement(rq92);
+                            ps92.setString(1,"CHI362");
+                            ps92.setString(2, Mat);
+                            ps92.setInt(3,4);
+                            ps92.executeUpdate();
+                            String rq93 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps93 = con.maConnection().prepareStatement(rq93);
+                            ps93.setString(1,"BCH352");
+                            ps93.setString(2, Mat);
+                            ps93.setInt(3,2);
+                            ps93.executeUpdate();
+                            String rq94 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps94 = con.maConnection().prepareStatement(rq94);
+                            ps94.setString(1,"FRA322");
+                            ps94.setString(2, Mat);
+                            ps94.setInt(3,2);
+                            ps94.executeUpdate();
+                            String rq10 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps10 = con.maConnection().prepareStatement(rq10);
+                            ps10.setString(1,"ANG312");
+                            ps10.setString(2, Mat);
+                            ps10.setInt(3,2);
+                            ps10.executeUpdate();
                         }
                         
                     } else if (Fil=="ICT4D"){
-                        
                         if(Niv=="L1"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"ICT101");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,5);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"ICT103");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,5);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"ICT105");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,5);
+                            ps2.executeUpdate();
+                            String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
+                            ps3.setString(1,"ICT107");
+                            ps3.setString(2, Mat);
+                            ps3.setInt(3,5);
+                            ps3.executeUpdate();
+                            String rq33 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps33 = con.maConnection().prepareStatement(rq33);
+                            ps33.setString(1,"ICT109");
+                            ps33.setString(2, Mat);
+                            ps33.setInt(3,5);
+                            ps33.executeUpdate();
+                            String rq31 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps31 = con.maConnection().prepareStatement(rq31);
+                            ps31.setString(1,"ICT111");
+                            ps31.setString(2, Mat);
+                            ps31.setInt(3,5);
+                            ps31.executeUpdate();
+                           
                             
-                            
-                            
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"ICT102");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,5);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"ICT104");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,6);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"ICT106");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,5);
+                            ps7.executeUpdate();
+                            String rq8 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps8 = con.maConnection().prepareStatement(rq8);
+                            ps8.setString(1,"ICT108");
+                            ps8.setString(2, Mat);
+                            ps8.setInt(3,6);
+                            ps8.executeUpdate();
+                            String rq81 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps81 = con.maConnection().prepareStatement(rq81);
+                            ps81.setString(1,"ICT110");
+                            ps81.setString(2, Mat);
+                            ps81.setInt(3,5);
+                            ps81.executeUpdate();
+                            String rq82 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps82 = con.maConnection().prepareStatement(rq82);
+                            ps82.setString(1,"ICT112");
+                            ps82.setString(2, Mat);
+                            ps82.setInt(3,5);
+                            ps82.executeUpdate();
+                            String rqt = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,Uet);
+                            pst.setString(2, Mat);
+                            pst.setInt(3,3);
+                            pst.executeUpdate();
                         } else if (Niv=="L2"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"ICT201");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,5);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"ICT203");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,5);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"ICT205");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,5);
+                            ps2.executeUpdate();
+                            String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
+                            ps3.setString(1,"ICT207");
+                            ps3.setString(2, Mat);
+                            ps3.setInt(3,5);
+                            ps3.executeUpdate();
+                            String rq33 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps33 = con.maConnection().prepareStatement(rq33);
+                            ps33.setString(1,"ICT209");
+                            ps33.setString(2, Mat);
+                            ps33.setInt(3,5);
+                            ps33.executeUpdate();
+                            String rq31 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps31 = con.maConnection().prepareStatement(rq31);
+                            ps31.setString(1,"ICT211");
+                            ps31.setString(2, Mat);
+                            ps31.setInt(3,5);
+                            ps31.executeUpdate();
+                           
                             
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"ICT202");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,5);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"ICT204");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,6);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"ICT206");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,5);
+                            ps7.executeUpdate();
+                            String rq8 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps8 = con.maConnection().prepareStatement(rq8);
+                            ps8.setString(1,"ICT208");
+                            ps8.setString(2, Mat);
+                            ps8.setInt(3,6);
+                            ps8.executeUpdate();
+                            String rq81 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps81 = con.maConnection().prepareStatement(rq81);
+                            ps81.setString(1,"ICT210");
+                            ps81.setString(2, Mat);
+                            ps81.setInt(3,5);
+                            ps81.executeUpdate();
+                            String rq82 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps82 = con.maConnection().prepareStatement(rq82);
+                            ps82.setString(1,"ICT212");
+                            ps82.setString(2, Mat);
+                            ps82.setInt(3,5);
+                            ps82.executeUpdate();
+                            String rqt = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,Uet);
+                            pst.setString(2, Mat);
+                            pst.setInt(3,3);
+                            pst.executeUpdate();
                         } else if (Niv=="L3"){
+                            String rq0 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps0 = con.maConnection().prepareStatement(rq0);
+                            ps0.setString(1,"ICT301");
+                            ps0.setString(2, Mat);
+                            ps0.setInt(3,5);
+                            ps0.executeUpdate();
+                            String rq1 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps1 = con.maConnection().prepareStatement(rq1);
+                            ps1.setString(1,"ICT303");
+                            ps1.setString(2, Mat);
+                            ps1.setInt(3,5);
+                            ps1.executeUpdate();
+                            String rq2 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps2 = con.maConnection().prepareStatement(rq2);
+                            ps2.setString(1,"ICT305");
+                            ps2.setString(2, Mat);
+                            ps2.setInt(3,5);
+                            ps2.executeUpdate();
+                            String rq3 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps3 = con.maConnection().prepareStatement(rq3);
+                            ps3.setString(1,"ICT307");
+                            ps3.setString(2, Mat);
+                            ps3.setInt(3,5);
+                            ps3.executeUpdate();
+                            String rq33 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps33 = con.maConnection().prepareStatement(rq33);
+                            ps33.setString(1,"ICT309");
+                            ps33.setString(2, Mat);
+                            ps33.setInt(3,5);
+                            ps33.executeUpdate();
+                            String rq31 = "insert into notes_etudiant(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps31 = con.maConnection().prepareStatement(rq31);
+                            ps31.setString(1,"ICT311");
+                            ps31.setString(2, Mat);
+                            ps31.setInt(3,5);
+                            ps31.executeUpdate();
+                           
                             
+                            String rq5 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps5 = con.maConnection().prepareStatement(rq5);
+                            ps5.setString(1,"ICT302");
+                            ps5.setString(2, Mat);
+                            ps5.setInt(3,5);
+                            ps5.executeUpdate();
+                            String rq6 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps6 = con.maConnection().prepareStatement(rq6);
+                            ps6.setString(1,"ICT304");
+                            ps6.setString(2, Mat);
+                            ps6.setInt(3,6);
+                            ps6.executeUpdate();
+                            String rq7 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps7 = con.maConnection().prepareStatement(rq7);
+                            ps7.setString(1,"ICT306");
+                            ps7.setString(2, Mat);
+                            ps7.setInt(3,5);
+                            ps7.executeUpdate();
+                            String rq8 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps8 = con.maConnection().prepareStatement(rq8);
+                            ps8.setString(1,"ICT308");
+                            ps8.setString(2, Mat);
+                            ps8.setInt(3,6);
+                            ps8.executeUpdate();
+                            String rq81 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps81 = con.maConnection().prepareStatement(rq81);
+                            ps81.setString(1,"ICT310");
+                            ps81.setString(2, Mat);
+                            ps81.setInt(3,5);
+                            ps81.executeUpdate();
+                            String rq82 = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement ps82 = con.maConnection().prepareStatement(rq82);
+                            ps82.setString(1,"ICT312");
+                            ps82.setString(2, Mat);
+                            ps82.setInt(3,5);
+                            ps82.executeUpdate();
+                            String rqt = "insert into notes_etudiant2(ue,matricule,nb_credit) values(?,?,?)";
+                            PreparedStatement pst = con.maConnection().prepareStatement(rqt);
+                            pst.setString(1,Uet);
+                            pst.setString(2, Mat);
+                            pst.setInt(3,3);
+                            pst.executeUpdate();
                         }
                         
                     } 
@@ -799,7 +2003,7 @@ public class EnregistrementEtudiant extends JFrame {
                     ps.setString(2, Mdp);
                     ps.setString(3, Mat);
                     ps.setString(4, Nom);
-                    ps.setString(5, Sexe);
+                    ps.setString(5, Sex);
                     ps.setString(6, Fil);
                     ps.setString(7, Niv);
                     ps.setString(8, Ue);
@@ -813,9 +2017,9 @@ public class EnregistrementEtudiant extends JFrame {
                     JOptionPane.showMessageDialog(null,"Ereur!"+ex.getMessage(),null,JOptionPane.ERROR_MESSAGE);
                 }
                 dispose();
-                EnregistrementEtudiant etd = new EnregistrementEtudiant();
+                EnregistrementEtudiant etd = new EnregistrementEtudiant(datab,userx,passx);
                 etd.setVisible(true);
-                
+              }
             }
 
         });
@@ -830,7 +2034,7 @@ public class EnregistrementEtudiant extends JFrame {
         btnsupprimer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 String Id, Mdp, Mat, Nom, Sexe, Fil, Niv, Ue;
-                Connect con = new Connect();
+                Connect con = new Connect(datab,userx,passx);
                 Id = txtIdentifiant.getText();
                 Mat = txtMat.getText();
                 
@@ -848,7 +2052,7 @@ public class EnregistrementEtudiant extends JFrame {
                 }
                     
                 dispose();
-                EnregistrementEtudiant etd = new EnregistrementEtudiant();
+                EnregistrementEtudiant etd = new EnregistrementEtudiant(datab,userx,passx);
                 etd.setVisible(true);
                 
             }
@@ -896,13 +2100,6 @@ public class EnregistrementEtudiant extends JFrame {
            }
         });
         pn.add(lblImage);
-        
-    }
-    
-    public static void main(String[] args){
-        
-        EnregistrementEtudiant en = new EnregistrementEtudiant();
-        en.setVisible(true);
         
     }
     
