@@ -1,7 +1,9 @@
-package Etudiant;
+package SuperProf;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import static java.awt.image.ImageObserver.HEIGHT;
 import static java.awt.image.ImageObserver.WIDTH;
@@ -33,10 +35,15 @@ public class Prof extends JFrame {
     JRadioButton rbtn;
     int i=0;
     
-    public Prof(){
+    public Prof(String datab,String userx, String passx){
         
         super.setTitle("SuperProf");
-        super.setSize(1000, 300);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+        int desiredWidth = (int) (screenWidth*0.8);
+        int desiredHeight = (int) (screenHeight*0.8);
+        super.setSize(desiredWidth, desiredHeight);
         super.setLocationRelativeTo(null);
         super.setResizable(true);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,37 +52,6 @@ public class Prof extends JFrame {
         pn.setLayout(null);
         add(pn);
         pn.setBackground(new Color(50,50,100));
-        
-        /*/
-        rbtn = new JRadioButton("afficher");
-        rbtn.setBounds(250,240,150,20);
-        rbtn.setFont(new Font("Arial", Font.BOLD,12));
-        rbtn.setBackground(new Color(0,200,200));
-        rbtn.addActionListener(new java.awt.event.ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtnActionPerformed(evt);
-            }
-            
-            private void rbtnActionPerformed(ActionEvent evt) {
-                
-                if(i%2==0){
-                    char[]mo = pwf.getPassword();
-                    String mp = new String(mo);
-                    pwf.setText(mp);
-                    i+=i;
-                } else {
-                    String mp = pwf.getText();
-                    int l = mp.length();
-                    char[] mo = new char[l];
-                    for(int o=0; o<l; o++){
-                        mo[o]=mp.charAt(o);
-                    }
-                    i+=i;
-                }
-            } 
-        });
-        //*/
-        //pn.add(rbtn);
         
         btnPrec = new JButton("Precedent");
         btnPrec.setBounds(700,240,150,20);
@@ -88,7 +64,7 @@ public class Prof extends JFrame {
             
             private void btnPrecActionPerformed(ActionEvent evt) {
                 
-                EcranAcc ecr = new EcranAcc();
+                EcranAcc ecr = new EcranAcc(datab,userx,passx);
                 ecr.setVisible(true);
                 dispose();
                 
@@ -99,6 +75,13 @@ public class Prof extends JFrame {
         lblTitre = new JLabel("CONNECTEZ-VOUS A VOTRE COMPTE");
         lblTitre.setBounds(250,10, 500, 30);
         lblTitre.setFont(new Font("Arial", Font.BOLD, 24));
+        lblTitre.setForeground(new Color(255,255,255));
+        //lblTitre.setLocation(400, 225);
+        pn.add(lblTitre);
+        
+        lblTitre = new JLabel("CONNECT TO YOUR ACCOUNT");
+        lblTitre.setBounds(330,35, 300, 20);
+        lblTitre.setFont(new Font("Arial", Font.ITALIC, 13));
         lblTitre.setForeground(new Color(255,255,255));
         //lblTitre.setLocation(400, 225);
         pn.add(lblTitre);
@@ -129,7 +112,7 @@ public class Prof extends JFrame {
                 String Identifiant,Mdp1,Ue;
                 Identifiant = txtId.getText();
                 String Mdp = new String(Mdp0);
-                Connect conn = new Connect();
+                Connect conn = new Connect(datab,userx,passx);
                 
                 try{
                     String rq = "Select * from tb_prof where identifiant =?";
@@ -144,7 +127,7 @@ public class Prof extends JFrame {
                         Mdp1 = rs.getString(2).trim();
                         Ue = rs.getString(7).trim();
                         if(Mdp.equals(Mdp1)){
-                            ProfConnect efn = new ProfConnect(Identifiant,Ue);
+                            ProfConnect efn = new ProfConnect(Identifiant,Ue,datab, userx, passx);
                             efn.setVisible(true);
                             dispose();
                         } else {
@@ -182,23 +165,14 @@ public class Prof extends JFrame {
             }
             
             private void btnEnregActionPerformed(ActionEvent evt) {
-                Mdpmdrt es = new Mdpmdrt("CrtPr",0,null,null);
+                Mdpmdrt es = new Mdpmdrt("CrtPr",0,null,null,datab,userx,passx);
                 es.setVisible(true);
-                Prof eq = new Prof();
+                Prof eq = new Prof(datab,userx,passx);
                 eq.setVisible(false);
                 dispose();
             } 
         });
         pn.add(btnEnreg);
     }
-    
-    public static void main(String[] args){
-        
-        Prof en = new Prof();
-        en.setVisible(true);
-        
-        
-    }
-    
     
 }
